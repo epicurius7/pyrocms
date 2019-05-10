@@ -74,12 +74,12 @@ class Theme_Pyrocms extends Theme {
 				try
 				{
 					$this->load->library('analytics', array(
-						'username' => $this->settings->ga_email,
-						'password' => $this->settings->ga_password
+						'email' => $this->settings->ga_email,
+						'key_file' => $this->settings->ga_password
 					));
 
 					// Set by GA Profile ID if provided, else try and use the current domain
-					$this->analytics->setProfileById('ga:'.$this->settings->ga_profile);
+					$this->analytics->setProfileById($this->settings->ga_profile);
 
 					$end_date = date('Y-m-d');
 					$start_date = date('Y-m-d', strtotime('-1 month'));
@@ -117,7 +117,7 @@ class Theme_Pyrocms extends Theme {
 
 				catch (Exception $e)
 				{
-					$data['messages']['notice'] = sprintf(lang('cp:google_analytics_no_connect'), anchor('admin/settings', lang('cp:nav_settings')));
+					$data['messages']['notice'] = sprintf(lang('cp:google_analytics_no_connect').'<br>'.$e->getMessage(), anchor('admin/settings', lang('cp:nav_settings')));
 				}
 			}
 
